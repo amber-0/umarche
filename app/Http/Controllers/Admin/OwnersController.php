@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Owner; // エロクアント
+use Illuminate\Support\Facades\DB; // クエリビルダ
+use Carbon\Carbon;
+
 
 class OwnersController extends Controller
 {
@@ -18,7 +22,16 @@ class OwnersController extends Controller
      */
     public function index()
     {
-        dd('オーナー一覧です');
+        $date_now = Carbon::now();
+        $date_parse = Carbon::parse(now());
+        echo $date_now->year;
+        echo $date_parse; 
+
+        $e_all = Owner::all();
+        $q_get = DB::table('owners')->select('name', 'created_at')->get();
+
+        return view('admin.owners.index', compact('e_all', 'q_get'));
+
     }
 
     /**
